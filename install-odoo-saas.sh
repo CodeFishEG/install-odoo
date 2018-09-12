@@ -98,9 +98,7 @@
  #### Update Server
  apt-get update && apt-get -y upgrade
 
-rm -rf /usr/lib/python2.7/dist-packages/OpenSSL
-rm -rf /usr/lib/python2.7/dist-packages/pyOpenSSL-0.15.1.egg-info
-sudo pip install pyopenssl
+
 
 
  #### DOWNLOADS...
@@ -176,7 +174,9 @@ sudo pip install pyopenssl
      then
          apt-get install -y python-unittest2
      fi
-
+rm -rf /usr/lib/python2.7/dist-packages/OpenSSL
+rm -rf /usr/lib/python2.7/dist-packages/pyOpenSSL-0.15.1.egg-info
+sudo pip install pyopenssl
 
      pip install "werkzeug<0.12" --upgrade
      pip install psycogreen
