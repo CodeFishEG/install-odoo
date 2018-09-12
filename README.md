@@ -25,6 +25,8 @@ with or without using [Amazon RDS](https://aws.amazon.com/rds/), with additional
     git checkout 8.0
     # or 9.0:
     git checkout 9.0
+    # or 10.0:
+    git checkout 10.0
     # or recent version:
     git checkout master
 
