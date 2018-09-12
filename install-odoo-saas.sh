@@ -182,8 +182,8 @@ sudo pip install pyopenssl
      pip install psycogreen
      #requirements.txt
      apt-get install -y postgresql-server-dev-all python-dev  build-essential libxml2-dev libxslt1-dev 
-     cd $ODOO_SOURCE_DIR
-     pip install -r requirements.txt
+     #cd $ODOO_SOURCE_DIR
+     #pip install -r requirements.txt
 
      # fix error with jpeg (if you get it)
      apt-get install -y python-dev build-essential libxml2-dev libxslt1-dev
