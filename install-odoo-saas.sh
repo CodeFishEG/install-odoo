@@ -280,7 +280,7 @@
 
      #### Changes on Odoo Code
      cd $ODOO_SOURCE_DIR
-     pip install -r requirements.txt
+     #pip install -r requirements.txt
      ## delete matches="..." at /web/database/manager
      sed -i 's/matches="[^"]*"//g' addons/web/static/src/xml/base.xml
  fi
