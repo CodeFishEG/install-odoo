@@ -62,7 +62,7 @@ with or without using [Amazon RDS](https://aws.amazon.com/rds/), with additional
     tail -f -n 100 /var/log/odoo/odoo-server.log
     
     # start from console (for ODOO_USER=odoo):
-    sudo su - odoo -s /bin/bash -c  "/usr/local/src/odoo-source/odoo-bin -c /etc/odoo-server.conf"
+    sudo su - odoo -s /bin/bash -c  "/odoo/odoo-bin -c /etc/odoo-server.conf"
     
     # psql (use name of your database)
     sudo -u odoo psql DATABASE
