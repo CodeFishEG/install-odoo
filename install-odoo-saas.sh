@@ -303,6 +303,7 @@ sudo pip install pyopenssl
      REPOS=( "${REPOS[@]}" " https://github.com/OCA/product-attribute.git OCA/product-attribute")
      REPOS=( "${REPOS[@]}" "https://github.com/OCA/account-invoicing.git OCA/account-invoicing")
      REPOS=( "${REPOS[@]}" "https://github.com/OCA/account-closing.git OCA/account-closing")
+     REPOS=( "${REPOS[@]}" "https://github.com/OCA/queue.git OCA/queue")
  fi
 
  if [[ "$CLONE_IT_PROJECTS_LLC" == "yes" ]]
