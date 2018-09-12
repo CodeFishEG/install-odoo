@@ -5,20 +5,20 @@
  #### GENERAL SETTINGS : Edit the following settings as needed
 
  # Actions
- export INSTALL_DEPENDENCIES=${INSTALL_DEPENDENCIES:-"no"}
- export INIT_POSTGRESQL=${INIT_POSTGRESQL:-"no"} # yes | no | docker-container
- export INIT_BACKUPS=${INIT_BACKUPS:-"no"} # yes | no | docker-host
- export INIT_NGINX=${INIT_NGINX:-"no"} # yes | no | docker-host
- export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"no"} # yes | no | docker-host
- export INIT_SAAS_TOOLS=${INIT_SAAS_TOOLS:-"no"} # no | list of parameters to saas.py script
- export INIT_ODOO_CONFIG=${INIT_ODOO_CONFIG:-"no"} # no | yes | docker-container
- export INIT_USER=${INIT_USER:-"no"}
- export INIT_DIRS=${INIT_DIRS:-"no"}
+ export INSTALL_DEPENDENCIES=${INSTALL_DEPENDENCIES:-"yes"}
+ export INIT_POSTGRESQL=${INIT_POSTGRESQL:-"docker-container"} # yes | no | docker-container
+ export INIT_BACKUPS=${INIT_BACKUPS:-"docker-host"} # yes | no | docker-host
+ export INIT_NGINX=${INIT_NGINX:-"docker-host"} # yes | no | docker-host
+ export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"docker-host"} # yes | no | docker-host
+ export INIT_SAAS_TOOLS=${INIT_SAAS_TOOLS:-"list of parameters to saas.py script"} # no | list of parameters to saas.py script
+ export INIT_ODOO_CONFIG=${INIT_ODOO_CONFIG:-"docker-container"} # no | yes | docker-container
+ export INIT_USER=${INIT_USER:-"yes"}
+ export INIT_DIRS=${INIT_DIRS:-"yes"}
  export ADD_AUTOINSTALL_MODULES=${ADD_AUTOINSTALL_MODULES:-""} # "['module1','module2']"
  export ADD_IGNORED_DATABASES=${ADD_IGNORED_DATABASES:-""} # "['db1','db2']"
- export GIT_PULL=${GIT_PULL:-"no"}
- export UPDATE_ADDONS_PATH=${UPDATE_ADDONS_PATH:-"no"}
- export CLEAN=${CLEAN:-"no"}
+ export GIT_PULL=${GIT_PULL:-"yes"}
+ export UPDATE_ADDONS_PATH=${UPDATE_ADDONS_PATH:-"yes"}
+ export CLEAN=${CLEAN:-"yes"}
 
  ## Dirs
  export ODOO_SOURCE_DIR=${ODOO_SOURCE_DIR:-"/usr/local/src/odoo-source"}
@@ -26,37 +26,37 @@
  export ODOO_DATA_DIR=${ODOO_DATA_DIR:-"/opt/odoo/data/"}
  export BACKUPS_DIR=${BACKUPS_DIR:-"/opt/odoo/backups/"}
  export LOGS_DIR=${LOGS_DIR:-"/var/log/odoo/"}
- export OPENERP_SERVER=${OPENERP_SERVER:-/etc/openerp-server.conf}
+ export OPENERP_SERVER=${OPENERP_SERVER:-/etc/odoo-server.conf}
 
  ## Cloning
- export CLONE_IT_PROJECTS_LLC=${CLONE_IT_PROJECTS_LLC:-"no"}
- export CLONE_OCA=${CLONE_OCA:-"no"}
- export CLONE_ODOO=${CLONE_ODOO:-"no"}
+ export CLONE_IT_PROJECTS_LLC=${CLONE_IT_PROJECTS_LLC:-"yes"}
+ export CLONE_OCA=${CLONE_OCA:-"yes"}
+ export CLONE_ODOO=${CLONE_ODOO:-"yes"}
 
  ## Docker Names
  export ODOO_DOCKER=${ODOO_DOCKER:-"odoo"}
  export DB_ODOO_DOCKER=${DB_ODOO_DOCKER:-"db-odoo"}
- export NGINX_ODOO_DOCKER=${NGINX_ODOO_DOCKER:-""}  # unused if not specified
+ export NGINX_ODOO_DOCKER=${NGINX_ODOO_DOCKER:-"odoo"}  # unused if not specified
 
  ## E-Mail
- export EMAIL_SERVER=${EMAIL_SERVER:-stmp.example.com}
- export EMAIL_USER=${EMAIL_USER:-mail@example.com}
+ export EMAIL_SERVER=${EMAIL_SERVER:-stmp.codefish.com.eg}
+ export EMAIL_USER=${EMAIL_USER:-mail@codefish.com.eg}
  export EMAIL_PASS=${EMAIL_PASS:-GiveMeYourPassBaby}
 
  ## PostgreSQL
  export DB_PASS=${DB_PASS:-`< /dev/urandom tr -dc A-Za-z0-9 | head -c16;echo;`}
 
  ## Odoo
- export ODOO_DOMAIN=${ODOO_DOMAIN:-odoo.example.com}
- export ODOO_DATABASE=${ODOO_DATABASE:-odoo.example.com}
+ export ODOO_DOMAIN=${ODOO_DOMAIN:-pharmacistplace.com}
+ export ODOO_DATABASE=${ODOO_DATABASE:-pharmacistplace.com}
  export ODOO_USER=${ODOO_USER:-odoo}
  export ODOO_BRANCH=${ODOO_BRANCH:-10.0}
  export ODOO_MASTER_PASS=${ODOO_MASTER_PASS:-`< /dev/urandom tr -dc A-Za-z0-9 | head -c16;echo;`}
 
  ## Nginx
- export NGINX_SSL=${NGINX_SSL:-"no"}
- export SSL_CERT=${SSL_CERT:-/etc/nginx/XXXX.crt}
- export SSL_KEY=${SSL_KEY:-/etc/nginx/XXXX.key}
+ export NGINX_SSL=${NGINX_SSL:-"yes"}
+ export SSL_CERT=${SSL_CERT:-/home/cert/STAR_pharmacistplace_com.crt}
+ export SSL_KEY=${SSL_KEY:-/home/cert/pharmacistplace.com.key}
 
  ## wkhtmltopdf
  export WKHTMLTOPDF_DEB_URL=${WKHTMLTOPDF_DEB_URL:-""}
@@ -87,13 +87,21 @@
 
 
  ##### CHECK AND UPDATE LANGUAGE
- #env | grep LANG
- #export LANGUAGE=en_US:en
- #export LANG=en_US.UTF-8
- #export LC_ALL=en_US.UTF-8
- #locale-gen en_US.UTF-8 && \
- #dpkg-reconfigure locales
- #locale
+ env | grep LANG
+ export LANGUAGE=en_US:en
+ export LANG=en_US.UTF-8
+ export LC_ALL=en_US.UTF-8
+ locale-gen en_US.UTF-8 && \
+ dpkg-reconfigure locales
+ locale
+
+ #### Update Server
+ apt-get update && apt-get -y upgrade
+
+rm -rf /usr/lib/python2.7/dist-packages/OpenSSL
+rm -rf /usr/lib/python2.7/dist-packages/pyOpenSSL-0.15.1.egg-info
+sudo pip install pyopenssl
+
 
  #### DOWNLOADS...
 
@@ -158,7 +166,9 @@
          apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm
          rm -rf /var/lib/apt/lists/* wkhtmltox.deb
      fi
-
+#### Update Server
+ apt-get update && apt-get -y upgrade
+ 
      apt-get install -y adduser node-less node-clean-css python python-dateutil python-decorator python-docutils python-feedparser python-imaging python-jinja2 python-ldap python-libxslt1 python-lxml python-mako python-mock python-openid python-passlib python-psutil python-psycopg2 python-babel python-pychart python-pydot python-pyparsing python-pypdf python-reportlab python-requests python-suds python-tz python-vatnumber python-vobject python-werkzeug python-xlwt python-yaml
      apt-get install -y python-gevent python-simplejson
 
@@ -170,10 +180,10 @@
 
      pip install "werkzeug<0.12" --upgrade
      pip install psycogreen
-     # requirements.txt
-     #apt-get install -y postgresql-server-dev-all python-dev  build-essential libxml2-dev libxslt1-dev 
-     #cd $ODOO_SOURCE_DIR
-     #pip install -r requirements.txt
+     #requirements.txt
+     apt-get install -y postgresql-server-dev-all python-dev  build-essential libxml2-dev libxslt1-dev 
+     cd $ODOO_SOURCE_DIR
+     pip install -r requirements.txt
 
      # fix error with jpeg (if you get it)
      apt-get install -y python-dev build-essential libxml2-dev libxslt1-dev
@@ -195,12 +205,12 @@
      # ## Less CSS via nodejs
      # ## nodejs:
      # # for 14.04+
-     # apt-get install -y npm
-     # ln -s /usr/bin/nodejs /usr/bin/node
+     apt-get install -y npm
+     ln -s /usr/bin/nodejs /usr/bin/node
      # # for 13.10-
      # # check https://www.odoo.com/documentation/8.0/setup/install.html
      # ## less css
-     # npm install -g less less-plugin-clean-css
+     npm install -g less less-plugin-clean-css
 
 
      ### Deps for Odoo Saas Tool
@@ -249,7 +259,8 @@
      chown -R ${ODOO_USER}:${ODOO_USER} /opt/${ODOO_USER}/.local
 
  fi
-
+#### Update Server
+ apt-get update && apt-get -y upgrade
  ### Odoo Souce Code
  if [[ "$CLONE_ODOO" == "yes" ]]
  then
