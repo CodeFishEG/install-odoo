@@ -85,7 +85,7 @@
  fi
  echo "OS_RELEASE=$OS_RELEASE"
 
-sudo cp -R $INSTALL_ODOO_DIR/cert home/cert
+sudo cp -R $INSTALL_ODOO_DIR/cert home/
  #### Update Server
  echo -e "\n---- Update Server ----"
 
