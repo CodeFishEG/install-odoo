@@ -6,12 +6,12 @@
 
  # Actions
  export INSTALL_DEPENDENCIES=${INSTALL_DEPENDENCIES:-"yes"}
- export INIT_POSTGRESQL=${INIT_POSTGRESQL:-"docker-container"} # yes | no | docker-container
- export INIT_BACKUPS=${INIT_BACKUPS:-"docker-host"} # yes | no | docker-host
- export INIT_NGINX=${INIT_NGINX:-"docker-host"} # yes | no | docker-host
- export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"docker-host"} # yes | no | docker-host
+ export INIT_POSTGRESQL=${INIT_POSTGRESQL:-"yes"} # yes | no | docker-container
+ export INIT_BACKUPS=${INIT_BACKUPS:-"yes"} # yes | no | docker-host
+ export INIT_NGINX=${INIT_NGINX:-"yes"} # yes | no | docker-host
+ export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"yes"} # yes | no | docker-host
  export INIT_SAAS_TOOLS=${INIT_SAAS_TOOLS:-"list of parameters to saas.py script"} # no | list of parameters to saas.py script
- export INIT_ODOO_CONFIG=${INIT_ODOO_CONFIG:-"docker-container"} # no | yes | docker-container
+ export INIT_ODOO_CONFIG=${INIT_ODOO_CONFIG:-"yes"} # no | yes | docker-container
  export INIT_USER=${INIT_USER:-"yes"}
  export INIT_DIRS=${INIT_DIRS:-"yes"}
  export ADD_AUTOINSTALL_MODULES=${ADD_AUTOINSTALL_MODULES:-""} # "['module1','module2']"
@@ -21,8 +21,8 @@
  export CLEAN=${CLEAN:-"yes"}
 
  ## Dirs
- export ODOO_SOURCE_DIR=${ODOO_SOURCE_DIR:-"/usr/local/src/odoo-source"}
- export ADDONS_DIR=${ADDONS_DIR:-"/usr/local/src/odoo-extra-addons"}
+ export ODOO_SOURCE_DIR=${ODOO_SOURCE_DIR:-"/odoo"}
+ export ADDONS_DIR=${ADDONS_DIR:-"/odoo/custom"}
  export ODOO_DATA_DIR=${ODOO_DATA_DIR:-"/opt/odoo/data/"}
  export BACKUPS_DIR=${BACKUPS_DIR:-"/opt/odoo/backups/"}
  export LOGS_DIR=${LOGS_DIR:-"/var/log/odoo/"}
@@ -36,7 +36,7 @@
  ## Docker Names
  export ODOO_DOCKER=${ODOO_DOCKER:-"odoo"}
  export DB_ODOO_DOCKER=${DB_ODOO_DOCKER:-"db-odoo"}
- export NGINX_ODOO_DOCKER=${NGINX_ODOO_DOCKER:-"odoo"}  # unused if not specified
+ export NGINX_ODOO_DOCKER=${NGINX_ODOO_DOCKER:-""}  # unused if not specified
 
  ## E-Mail
  export EMAIL_SERVER=${EMAIL_SERVER:-stmp.codefish.com.eg}
@@ -48,7 +48,7 @@
 
  ## Odoo
  export ODOO_DOMAIN=${ODOO_DOMAIN:-pharmacistplace.com}
- export ODOO_DATABASE=${ODOO_DATABASE:-pharmacistplace.com}
+ export ODOO_DATABASE=${ODOO_DATABASE:-www.pharmacistplace.com}
  export ODOO_USER=${ODOO_USER:-odoo}
  export ODOO_BRANCH=${ODOO_BRANCH:-10.0}
  export ODOO_MASTER_PASS=${ODOO_MASTER_PASS:-`< /dev/urandom tr -dc A-Za-z0-9 | head -c16;echo;`}
@@ -87,13 +87,13 @@
 
 
  ##### CHECK AND UPDATE LANGUAGE
- env | grep LANG
- export LANGUAGE=en_US:en
- export LANG=en_US.UTF-8
- export LC_ALL=en_US.UTF-8
- locale-gen en_US.UTF-8 && \
- dpkg-reconfigure locales
- locale
+ #env | grep LANG
+ #export LANGUAGE=en_US:en
+ #export LANG=en_US.UTF-8
+ #export LC_ALL=en_US.UTF-8
+ #locale-gen en_US.UTF-8 && \
+ #dpkg-reconfigure locales
+ #locale
 
  #### Update Server
  apt-get update && apt-get -y upgrade
