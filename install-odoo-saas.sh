@@ -90,7 +90,7 @@
  echo -e "\n---- Update Server ----"
 
  apt-get update && apt-get -y upgrade
- apt install upstart
+ apt install -y upstart
 
  ##### CHECK AND UPDATE LANGUAGE
  #env | grep LANG
