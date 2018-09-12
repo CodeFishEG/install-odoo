@@ -52,7 +52,7 @@ with or without using [Amazon RDS](https://aws.amazon.com/rds/), with additional
 ## After installation
 
     # show settings (admin password, addons path)
-    head /etc/openerp-server.conf
+    head /etc/odoo-server.conf
     # show odoo version
     grep '^version_info ' $ODOO_SOURCE_DIR/openerp/release.py
 
@@ -62,7 +62,7 @@ with or without using [Amazon RDS](https://aws.amazon.com/rds/), with additional
     tail -f -n 100 /var/log/odoo/odoo-server.log
     
     # start from console (for ODOO_USER=odoo):
-    sudo su - odoo -s /bin/bash -c  "/usr/local/src/odoo-source/odoo-bin -c /etc/openerp-server.conf"
+    sudo su - odoo -s /bin/bash -c  "/usr/local/src/odoo-source/odoo-bin -c /etc/odoo-server.conf"
     
     # psql (use name of your database)
     sudo -u odoo psql DATABASE
