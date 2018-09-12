@@ -9,7 +9,7 @@
  export INIT_POSTGRESQL=${INIT_POSTGRESQL:-"yes"} # yes | no | docker-container
  export INIT_BACKUPS=${INIT_BACKUPS:-"yes"} # yes | no | docker-host
  export INIT_NGINX=${INIT_NGINX:-"yes"} # yes | no | docker-host
- export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"yes"} # yes | no | docker-host
+ export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"no"} # yes | no | docker-host
  export INIT_SAAS_TOOLS=${INIT_SAAS_TOOLS:-"list of parameters to saas.py script"} # no | list of parameters to saas.py script
  export INIT_ODOO_CONFIG=${INIT_ODOO_CONFIG:-"yes"} # no | yes | docker-container
  export INIT_USER=${INIT_USER:-"yes"}
@@ -21,7 +21,7 @@
  export CLEAN=${CLEAN:-"yes"}
 
  ## Dirs
- export ODOO_SOURCE_DIR=${ODOO_SOURCE_DIR:-"/odoo"}
+ export ODOO_SOURCE_DIR=${ODOO_SOURCE_DIR:-"/odoo/odoo"}
  export ADDONS_DIR=${ADDONS_DIR:-"/odoo/custom"}
  export ODOO_DATA_DIR=${ODOO_DATA_DIR:-"/opt/odoo/data/"}
  export BACKUPS_DIR=${BACKUPS_DIR:-"/opt/odoo/backups/"}
@@ -86,6 +86,12 @@
  echo "OS_RELEASE=$OS_RELEASE"
 
 
+ #### Update Server
+ echo -e "\n---- Update Server ----"
+
+ apt-get update && apt-get -y upgrade
+ apt install upstart
+
  ##### CHECK AND UPDATE LANGUAGE
  #env | grep LANG
  #export LANGUAGE=en_US:en
@@ -95,8 +101,6 @@
  #dpkg-reconfigure locales
  #locale
 
- #### Update Server
- apt-get update && apt-get -y upgrade
 
 
 
@@ -164,8 +168,9 @@
          apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm
          rm -rf /var/lib/apt/lists/* wkhtmltox.deb
      fi
-#### Update Server
- apt-get update && apt-get -y upgrade
+	 #### Update Server
+	 echo -e "\n---- Update Server ----"
+	 apt-get update && apt-get -y upgrade
  
      apt-get install -y adduser node-less node-clean-css python python-dateutil python-decorator python-docutils python-feedparser python-imaging python-jinja2 python-ldap python-libxslt1 python-lxml python-mako python-mock python-openid python-passlib python-psutil python-psycopg2 python-babel python-pychart python-pydot python-pyparsing python-pypdf python-reportlab python-requests python-suds python-tz python-vatnumber python-vobject python-werkzeug python-xlwt python-yaml
      apt-get install -y python-gevent python-simplejson
@@ -174,16 +179,18 @@
      then
          apt-get install -y python-unittest2
      fi
-rm -rf /usr/lib/python2.7/dist-packages/OpenSSL
-rm -rf /usr/lib/python2.7/dist-packages/pyOpenSSL-0.15.1.egg-info
-sudo pip install pyopenssl
+     
+    	 #### Fix OpenSSL
+	rm -rf /usr/lib/python2.7/dist-packages/OpenSSL
+	rm -rf /usr/lib/python2.7/dist-packages/pyOpenSSL-0.15.1.egg-info
+	sudo pip install pyopenssl
 
      pip install "werkzeug<0.12" --upgrade
      pip install psycogreen
+     pip install orm
      #requirements.txt
      apt-get install -y postgresql-server-dev-all python-dev  build-essential libxml2-dev libxslt1-dev 
-     #cd $ODOO_SOURCE_DIR
-     #pip install -r requirements.txt
+
 
      # fix error with jpeg (if you get it)
      apt-get install -y python-dev build-essential libxml2-dev libxslt1-dev
@@ -259,8 +266,9 @@ sudo pip install pyopenssl
      chown -R ${ODOO_USER}:${ODOO_USER} /opt/${ODOO_USER}/.local
 
  fi
-#### Update Server
- apt-get update && apt-get -y upgrade
+	#### Update Server
+	 apt-get update && apt-get -y upgrade
+	 
  ### Odoo Souce Code
  if [[ "$CLONE_ODOO" == "yes" ]]
  then
@@ -272,10 +280,11 @@ sudo pip install pyopenssl
 
      #### Changes on Odoo Code
      cd $ODOO_SOURCE_DIR
+     pip install -r requirements.txt
      ## delete matches="..." at /web/database/manager
      sed -i 's/matches="[^"]*"//g' addons/web/static/src/xml/base.xml
  fi
-
+ 
  mkdir -p $ADDONS_DIR
  cd $ADDONS_DIR
  REPOS=()
