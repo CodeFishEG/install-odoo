@@ -223,7 +223,7 @@ sudo cp -R $INSTALL_ODOO_DIR/cert /home/cert
      # ## nodejs:
      # # for 14.04+
      apt-get install -y npm
-     ln -s /usr/bin/nodejs /usr/bin/node
+     #ln -s /usr/bin/nodejs /usr/bin/node
      # # for 13.10-
      # # check https://www.odoo.com/documentation/8.0/setup/install.html
      # ## less css
