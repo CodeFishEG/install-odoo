@@ -489,11 +489,7 @@ sudo cp -R $INSTALL_ODOO_DIR/cert /home/cert
      /etc/init.d/nginx restart
  fi
 
- #### Odoo Saas Tool
- if [[ "$INIT_SAAS_TOOLS" != "no" ]]        ###################################### IF
- then
-     su --preserve-environment - ${ODOO_USER} -s /bin/bash -c  "$ADDONS_DIR/it-projects-llc/odoo-saas-tools/saas.py $INIT_SAAS_TOOLS"
- fi
+
 
  #### START CONTROL
  DAEMON_LIST=( "odoo" )
@@ -597,3 +593,8 @@ if [[ "$CLEAN" == "yes" ]]
 then
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false python-pip *-dev
 fi
+ #### Odoo Saas Tool
+ if [[ "$INIT_SAAS_TOOLS" != "no" ]]        ###################################### IF
+ then
+     su --preserve-environment - ${ODOO_USER} -s /bin/bash -c  "$ADDONS_DIR/it-projects-llc/odoo-saas-tools/saas.py"
+ fi
