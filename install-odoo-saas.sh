@@ -101,8 +101,7 @@ sudo cp -R $INSTALL_ODOO_DIR/cert /home/cert
  echo -e "\n---- Update Server ----"
 
  apt-get update && apt-get -y upgrade
- apt install -y upstart
-
+ 
  ##### CHECK AND UPDATE LANGUAGE
  #env | grep LANG
  #export LANGUAGE=en_US:en
