@@ -29,9 +29,7 @@ OE_PORT="8069"
 OE_VERSION="10.0"
 # Set this to True if you want to install Odoo 10 Enterprise!
 IS_ENTERPRISE="False"
-#set the superadmin password
-OE_SUPERADMIN="admin"
-OE_CONFIG="${OE_USER}-server"
+
 #### Fix OpenSSL
 rm -rf /usr/lib/python2.7/dist-packages/OpenSSL
 rm -rf /usr/lib/python2.7/dist-packages/pyOpenSSL-0.15.1.egg-info
