@@ -9,8 +9,19 @@
  export INIT_POSTGRESQL=${INIT_POSTGRESQL:-"yes"} # yes | no | docker-container
  export INIT_BACKUPS=${INIT_BACKUPS:-"yes"} # yes | no | docker-host
  export INIT_NGINX=${INIT_NGINX:-"yes"} # yes | no | docker-host
- export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"no"} # yes | no | docker-host
- export INIT_SAAS_TOOLS=${INIT_SAAS_TOOLS:-"list of parameters to saas.py script"} # no | list of parameters to saas.py script
+ export INIT_START_SCRIPTS=${INIT_START_SCRIPTS:-"yes"} # yes | no | docker-host
+ export INIT_SAAS_TOOLS=${INIT_SAAS_TOOLS:-"\
+--portal-create \
+--server-create \
+--plan-create \
+--odoo-script=/usr/local/src/odoo-source/odoo-bin \
+--odoo-config=/etc/openerp-server.conf \
+--admin-password='${ODOO_MASTER_PASS}' \
+--portal-db-name=${ODOO_DOMAIN} \
+--server-db-name=server-1.${ODOO_DOMAIN} \
+--plan-template-db-name=template-1.${ODOO_DOMAIN} \
+--plan-clients=demo-%i.${ODOO_DOMAIN} \
+"} # no | list of parameters to saas.py script
  export INIT_ODOO_CONFIG=${INIT_ODOO_CONFIG:-"yes"} # no | yes | docker-container
  export INIT_USER=${INIT_USER:-"yes"}
  export INIT_DIRS=${INIT_DIRS:-"yes"}
@@ -593,8 +604,16 @@ if [[ "$CLEAN" == "yes" ]]
 then
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false python-pip *-dev
 fi
+ #### Update Server
+ echo -e "\n---- Update Server ----"
+
+ apt-get update && apt-get -y upgrade
  #### Odoo Saas Tool
  if [[ "$INIT_SAAS_TOOLS" != "no" ]]        ###################################### IF
  then
-     su --preserve-environment - ${ODOO_USER} -s /bin/bash -c  "$ADDONS_DIR/it-projects-llc/odoo-saas-tools/saas.py"
+     su --preserve-environment - ${ODOO_USER} -s /bin/bash -c  "$ADDONS_DIR/it-projects-llc/odoo-saas-tools/saas.py $INIT_SAAS_TOOLS"
  fi
+#### Update Server
+ echo -e "\n---- Update Server ----"
+
+ apt-get update && apt-get -y upgrade
