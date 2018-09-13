@@ -15,7 +15,7 @@
 --server-create \
 --plan-create \
 --odoo-script=/usr/local/src/odoo-source/odoo-bin \
---odoo-config=/etc/openerp-server.conf \
+--odoo-config=/etc/odoo-server.conf \
 --admin-password='${ODOO_MASTER_PASS}' \
 --portal-db-name=${ODOO_DOMAIN} \
 --server-db-name=server-1.${ODOO_DOMAIN} \
