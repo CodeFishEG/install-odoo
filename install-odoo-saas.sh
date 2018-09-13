@@ -66,7 +66,7 @@
 
  ## Nginx
  export NGINX_SSL=${NGINX_SSL:-"yes"}
- export SSL_CERT=${SSL_CERT:-/home/cert/STAR_pharmacistplace_com.crt}
+ export SSL_CERT=${SSL_CERT:-/home/cert/ssl-bundle.crt}
  export SSL_KEY=${SSL_KEY:-/home/cert/pharmacistplace.com.key}
 
  ## wkhtmltopdf
