@@ -82,5 +82,9 @@ cd  $OE_HOME/custom
  then
      chown -R ${OE_USER}:${OE_USER} $OE_HOME/custom || true
  fi
- 
+      ADDONS_PATH=`ls -d1 /odoo/custom/*/* | tr '\n' ','`
+      ADDONS_PATH=`echo /odoo/odoo-server/addons,/odoo/custom/addons,$ADDONS_PATH | sed "s,//,/,g" | sed "s,/,\\\\\/,g" | sed "s,.$,,g" `
+     sed -ibak "s/addons_path.*/addons_path = $ADDONS_PATH/" /etc/odoo-server.conf
+
+
 pip install --upgrade pip
