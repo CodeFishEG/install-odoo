@@ -67,6 +67,11 @@ cd  $OE_HOME/custom
      REPOS=( "${REPOS[@]}" "https://github.com/it-projects-llc/mail-addons.git it-projects-llc/mail-addons")
      REPOS=( "${REPOS[@]}" "https://github.com/it-projects-llc/odoo-saas-tools.git it-projects-llc/odoo-saas-tools")
      REPOS=( "${REPOS[@]}" "https://github.com/it-projects-llc/odoo-telegram.git it-projects-llc/odoo-telegram")
+     REPOS=( "${REPOS[@]}" "https://github.com/OCA/hr-timesheet.git OCA/hr-timesheet")
+     REPOS=( "${REPOS[@]}" "https://github.com/OCA/sale-reporting.git OCA/sale-reportin")
+     REPOS=( "${REPOS[@]}" "https://github.com/OCA/product-attribute.git OCA/product-attribute")
+     
+     
      
      if [[ "${REPOS}" != "" ]]
  then
